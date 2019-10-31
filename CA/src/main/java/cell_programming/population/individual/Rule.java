@@ -41,6 +41,7 @@ public class Rule {
         );
     }
 
+
     private void populateRuleMap() {
 
         int n = 2 + 1;
@@ -68,7 +69,6 @@ public class Rule {
 
         return stringBuilder.toString();
     }
-
 
     private void populateRuleTable(final String configuration) {
 
@@ -140,5 +140,4 @@ public class Rule {
             );
         }
     }
-
 }
