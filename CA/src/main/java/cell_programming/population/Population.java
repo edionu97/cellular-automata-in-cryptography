@@ -40,4 +40,7 @@ public class Population {
         return rules;
     }
 
+    public List<Rule> getGeneratedRules() {
+        return rules != null ? rules : new ArrayList<>();
+    }
 }

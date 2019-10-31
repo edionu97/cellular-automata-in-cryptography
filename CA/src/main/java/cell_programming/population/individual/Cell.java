@@ -1,5 +1,7 @@
 package cell_programming.population.individual;
 
+import utils.string.StringUtils;
+
 public class Cell {
 
     private Rule cellRule;
@@ -42,13 +44,8 @@ public class Cell {
         this.cellIndex = cellIndex;
     }
 
-    public synchronized void evolve() {
-        configuration.setCharAt(
-                cellIndex,
-                cellRule.applyRuleOnAt(
-                        configuration.toString(),
-                        cellIndex
-                ).charAt(0)
-        );
+    public synchronized String evolve() {
+        return cellRule.applyRuleOnAt(
+                configuration.toString(), cellIndex);
     }
 }
