@@ -82,7 +82,8 @@ public class Rule {
 
         //get the rule length
         final int N = configuration.length();
-        final int L = log2(N);
+        final int L = RuleType.ONE.equals(getType()) ? 3 : 5;
+
         final StringBuilder builder = new StringBuilder();
 
         //set the value from the middle bit to value of the chat ar index

@@ -12,9 +12,9 @@ public class CA {
     private StringBuilder configuration;
 
 
-    public void reassignRules(final List<Rule> rules) {
+    public void reassignRules(final List<Rule> rules, final int N) {
 
-        if(rules.size() != configuration.length()){
+        if(rules.size() != N){
             throw new RuntimeException(
                     "Each cell is responsible with a byte of information, so you must have enough rules for each cell"
             );
