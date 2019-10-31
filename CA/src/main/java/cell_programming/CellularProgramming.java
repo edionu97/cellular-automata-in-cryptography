@@ -12,7 +12,7 @@ public class CellularProgramming implements ICellularProgramming {
     private static final int M = 50;
     private static final int GENERATION_NUMBER = 1;
 
-    private final Random random = new Random();
+    private final Random random = new Random(1);
     private final IEntropy entropyCalculator;
     private final ICellularAutomaton cellular;
 
@@ -47,15 +47,18 @@ public class CellularProgramming implements ICellularProgramming {
 
     }
 
+    /**
+     * @return calculates and returns a double value which represents the value of avg entropy
+     */
     private double getFitness() {
 
         double totalEntropy = .0;
         for (int i = 0; i < C; ++i) {
+
             //generate the configuration
             StringBuilder configuration = new StringBuilder(
                     getRandomConfiguration(bytesNumber)
             );
-
             for (int j = 0; j < M; ++j) {
                 //assign the configuration
                 cellular.assignConfiguration(configuration);
@@ -70,6 +73,12 @@ public class CellularProgramming implements ICellularProgramming {
         return totalEntropy / C;
     }
 
+    /**
+     * Get a random configuration of size @param bitNr
+     *
+     * @param bitNr: the number that represents the length of the configuration
+     * @return a string representing the random configuration
+     */
     private String getRandomConfiguration(int bitNr) {
 
         final StringBuilder stringBuilder = new StringBuilder();

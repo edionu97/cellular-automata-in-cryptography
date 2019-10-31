@@ -4,8 +4,8 @@
     <list default="true" id="679c32f4-5d4b-47b8-9ff6-cb9fe4a71005" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entropy/PNSEntropyCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entropy/PNSEntropyCalculator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572432627469</updated>
       <workItem from="1572432631087" duration="16224000" />
-      <workItem from="1572504890747" duration="19371000" />
+      <workItem from="1572504890747" duration="20284000" />
     </task>
     <servers />
   </component>

@@ -14,7 +14,6 @@ public class PNSEntropyCalculator implements IEntropy {
     private String sequence;
     private final ISearcher searcher;
     private final List<String> subsequences;
-    private final MathContext mathContext = new MathContext(10, RoundingMode.HALF_UP);
 
     public PNSEntropyCalculator(
             final int h, final ISearcher searcher) {
