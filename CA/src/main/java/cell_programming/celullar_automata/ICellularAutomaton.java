@@ -1,5 +1,6 @@
 package cell_programming.celullar_automata;
 
+import cell_programming.population.individual.Cell;
 import cell_programming.population.individual.Rule;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ICellularAutomaton {
      * @return the PNS after the cellular evolution
      */
     StringBuilder evolve();
+
+    List<Cell> getCells();
 }

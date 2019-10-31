@@ -9,6 +9,7 @@ public class Rule {
 
     private final int ruleNumber;
     private final RuleType type;
+    private double fitness;
     private Map<String, String> ruleMap = new HashMap<>();
 
     private Rule(final int ruleNumber, final RuleType type) {
@@ -129,5 +130,14 @@ public class Rule {
                     configuration.charAt(poz)
             );
         }
+    }
+
+
+    public double getFitness() {
+        return fitness;
+    }
+
+    public void setFitness(final double fitness) {
+        this.fitness = fitness;
     }
 }

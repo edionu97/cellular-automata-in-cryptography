@@ -55,6 +55,11 @@ public class CellularAutomaton implements ICellularAutomaton {
         return builder;
     }
 
+    @Override
+    public List<Cell> getCells() {
+        return cells;
+    }
+
 
     private void populateCells(final List<Rule> rules) {
         int index = 0;

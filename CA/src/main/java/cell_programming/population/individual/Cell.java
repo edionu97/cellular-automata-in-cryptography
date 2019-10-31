@@ -1,6 +1,6 @@
 package cell_programming.population.individual;
 
-import utils.string.StringUtils;
+import entropy.IEntropy;
 
 public class Cell {
 
@@ -8,7 +8,7 @@ public class Cell {
 
     private int cellIndex;
 
-    private volatile StringBuilder configuration;
+    private volatile StringBuilder configuration, cellBitStream;
 
     public Cell(
             final Rule cellRule,
@@ -18,13 +18,15 @@ public class Cell {
         this.cellRule = cellRule;
         this.cellIndex = cellIndex;
         this.configuration = configuration;
+        this.cellBitStream = new StringBuilder();
     }
 
     public Rule getCellRule() {
         return cellRule;
     }
 
-    public void setCellRule(Rule cellRule) {
+    public void setCellRule(final Rule cellRule) {
+        cellBitStream = new StringBuilder();
         this.cellRule = cellRule;
     }
 
@@ -45,7 +47,18 @@ public class Cell {
     }
 
     public synchronized String evolve() {
-        return cellRule.applyRuleOnAt(
+
+        final String result = cellRule.applyRuleOnAt(
                 configuration.toString(), cellIndex);
+
+        cellBitStream.append(result);
+
+        return result;
+    }
+
+    public void computeRuleFitness(final IEntropy entropy) {
+        entropy.setSequence(cellBitStream.toString());
+        final double ruleFitness = entropy.getEntropyValue();
+        getCellRule().setFitness(ruleFitness);
     }
 }
