@@ -6,18 +6,18 @@ import entropy.IEntropy;
 
 import java.util.Random;
 
-public class CellularProgramming {
+public class CellularProgramming implements ICellularProgramming {
 
     private static final int C = 300;
     private static final int M = 50;
     private static final int GENERATION_NUMBER = 1;
 
-    private int bytesNumber;
-
+    private final Random random = new Random();
     private final IEntropy entropyCalculator;
     private final ICellularAutomaton cellular;
 
-    private final Random random = new Random(1);
+    private int bytesNumber;
+
 
     public CellularProgramming(final IEntropy entropyCalculator,
                                final ICellularAutomaton cellular,
@@ -28,6 +28,7 @@ public class CellularProgramming {
         this.bytesNumber = bytesNumber;
     }
 
+    @Override
     public void evolve() {
 
         final Population population = new Population(random, bytesNumber);
