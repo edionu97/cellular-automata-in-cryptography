@@ -1,6 +1,6 @@
 package cell_programming;
 
-import cell_programming.celullar_automata.CA;
+import cell_programming.celullar_automata.ICellularAutomaton;
 import cell_programming.population.Population;
 import entropy.IEntropy;
 
@@ -11,32 +11,32 @@ public class CellularProgramming {
     private static final int C = 300;
     private static final int M = 50;
     private static final int GENERATION_NUMBER = 1;
-    private final CA cellular;
-    private final IEntropy entropyCalculator;
-    private final Random random = new Random(1);
-    private int N;
-    private Population population;
 
+    private int bytesNumber;
+
+    private final IEntropy entropyCalculator;
+    private final ICellularAutomaton cellular;
+
+    private final Random random = new Random(1);
 
     public CellularProgramming(final IEntropy entropyCalculator,
-                               final CA cellular,
-                               final int N) {
+                               final ICellularAutomaton cellular,
+                               final int bytesNumber) {
 
         this.entropyCalculator = entropyCalculator;
         this.cellular = cellular;
-        this.N = N;
+        this.bytesNumber = bytesNumber;
     }
 
     public void evolve() {
 
-        population = new Population(random, N);
+        final Population population = new Population(random, bytesNumber);
         population.generate();
-
 
         for (int gen = 0; gen < GENERATION_NUMBER; ++gen) {
             //reassign rules
             cellular.reassignRules(
-                    population.getGeneratedRules(), N
+                    population.getGeneratedRules(), bytesNumber
             );
 
             double fitness = getFitness();
@@ -52,10 +52,10 @@ public class CellularProgramming {
         for (int i = 0; i < C; ++i) {
             //generate the configuration
             StringBuilder configuration = new StringBuilder(
-                    getRandomConfiguration(N)
+                    getRandomConfiguration(bytesNumber)
             );
 
-            for(int j = 0; j < M; ++j){
+            for (int j = 0; j < M; ++j) {
                 //assign the configuration
                 cellular.assignConfiguration(configuration);
                 configuration = cellular.evolve();

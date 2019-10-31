@@ -6,12 +6,12 @@ import cell_programming.population.individual.Rule;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CA {
+public class CellularAutomaton implements ICellularAutomaton {
 
     private final List<Cell> cells = new ArrayList<>();
     private StringBuilder configuration;
 
-
+    @Override
     public void reassignRules(final List<Rule> rules, final int N) {
 
         if(rules.size() != N){
@@ -33,11 +33,13 @@ public class CA {
         }
     }
 
+    @Override
     public void assignConfiguration(final StringBuilder newConfiguration) {
         this.configuration = newConfiguration;
         cells.forEach(cell -> cell.setConfiguration(newConfiguration));
     }
 
+    @Override
     public StringBuilder evolve() {
 
         final StringBuilder builder = new StringBuilder();
@@ -52,6 +54,7 @@ public class CA {
 
         return builder;
     }
+
 
     private void populateCells(final List<Rule> rules) {
         int index = 0;
