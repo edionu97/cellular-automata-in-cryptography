@@ -1,5 +1,6 @@
 package cell_programming.population.individual;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -7,7 +8,7 @@ public class Rule {
 
     private final int ruleNumber;
     private final RuleType type;
-    private Map<String, String> ruleMap = new TreeMap<>();
+    private Map<String, String> ruleMap = new HashMap<>();
 
     private Rule(final int ruleNumber, final RuleType type) {
         this.ruleNumber = ruleNumber;
