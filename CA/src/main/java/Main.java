@@ -1,3 +1,4 @@
+import cell_programming.population.individual.Rule;
 import entropy.IEntropy;
 import entropy.PNSEntropyCalculator;
 import utils.entropy.ISearcher;
@@ -11,6 +12,13 @@ public class Main {
         entropy.setSequence("101101010011101010111");
 
         System.out.println(entropy.getEntropyValue());
+
+        final Rule rule = Rule.build(107);
+        System.out.println(rule.applyRuleOnAt(
+                "01110101", 0
+        ));
+
+
 
     }
 }
