@@ -2,7 +2,8 @@ package cell_programming.population.individual;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
+import static utils.string.StringUtils.zeroPaddedAtStart;
 
 public class Rule {
 
@@ -56,19 +57,6 @@ public class Rule {
 
         populateRuleTable(zeroPaddedAtStart(
                 (1 << n) - representation.length(), representation));
-    }
-
-    private String zeroPaddedAtStart(
-            int numberOfZeros, final String representation) {
-
-        final StringBuilder stringBuilder = new StringBuilder();
-
-        while (numberOfZeros-- > 0) {
-            stringBuilder.append("0");
-        }
-        stringBuilder.append(representation);
-
-        return stringBuilder.toString();
     }
 
     private void populateRuleTable(final String configuration) {

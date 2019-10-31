@@ -6,7 +6,17 @@ public class Cell {
 
     private int cellIndex;
 
-    private StringBuilder configuration;
+    private volatile StringBuilder configuration;
+
+    public Cell(
+            final Rule cellRule,
+            final int cellIndex,
+            final StringBuilder configuration) {
+
+        this.cellRule = cellRule;
+        this.cellIndex = cellIndex;
+        this.configuration = configuration;
+    }
 
     public Rule getCellRule() {
         return cellRule;
@@ -32,7 +42,7 @@ public class Cell {
         this.cellIndex = cellIndex;
     }
 
-    public void evolve() {
+    public synchronized void evolve() {
         configuration.setCharAt(
                 cellIndex,
                 cellRule.applyRuleOnAt(
