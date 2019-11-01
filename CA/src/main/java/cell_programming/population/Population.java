@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Population {
+public class Population implements IPopulation<Rule> {
 
     private static final int RULE_TYPE_2_BOUND = 1 << 30;
     private static final int RULE_TYPE_1_BOUND = 1 << 8 - 1;
@@ -23,6 +23,7 @@ public class Population {
         this.populationSize = populationSize;
     }
 
+    @Override
     public void generate() {
 
         rules = new ArrayList<>();
@@ -37,7 +38,8 @@ public class Population {
         }
     }
 
-    public List<Rule> getGeneratedRules() {
+    @Override
+    public List<Rule> getGeneratedIndividuals() {
         return rules != null ? rules : new ArrayList<>();
     }
 }

@@ -1,7 +1,9 @@
 package cell_programming;
 
 import cell_programming.celullar_automata.ICellularAutomaton;
+import cell_programming.population.IPopulation;
 import cell_programming.population.Population;
+import cell_programming.population.individual.Rule;
 import entropy.IEntropy;
 
 import java.util.Random;
@@ -9,7 +11,7 @@ import java.util.Random;
 public class CellularProgramming implements ICellularProgramming {
 
     private static final int C = 300;
-    private static final int M = 4096;
+    private static final int M = 50;
     private static final int GENERATION_NUMBER = 5;
 
     private final Random random = new Random();
@@ -31,17 +33,18 @@ public class CellularProgramming implements ICellularProgramming {
     @Override
     public void evolve() {
 
-        final Population population = new Population(random, bytesNumber);
+        final IPopulation<Rule> population = new Population(random, bytesNumber);
         population.generate();
 
         double fitness = .0;
         for (int gen = 0; gen < GENERATION_NUMBER; ++gen) {
             //reassign rules
             cellular.reassignRules(
-                    population.getGeneratedRules(), bytesNumber
+                    population.getGeneratedIndividuals(), bytesNumber
             );
 
             fitness = computeGlobalFitness();
+            this.applyGeneticOperators(population);
         }
 
         System.out.println(fitness);
@@ -93,11 +96,22 @@ public class CellularProgramming implements ICellularProgramming {
         return stringBuilder.toString();
     }
 
+    /**
+     * Compute te fitness for each rule from population
+     */
     private void computeRuleFitness() {
         cellular
                 .getCells()
                 .forEach(
                         cell -> cell.computeRuleFitness(entropyCalculator)
                 );
+    }
+
+    /**
+     * In this function the genetic operators will be applied
+     * @param population: the rule population that contains the given rules
+     */
+    private void applyGeneticOperators(final IPopulation<Rule> population) {
+
     }
 }
