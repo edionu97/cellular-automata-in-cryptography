@@ -4,21 +4,25 @@ import cell_programming.celullar_automata.ICellularAutomaton;
 import cell_programming.population.IPopulation;
 import cell_programming.population.Population;
 import cell_programming.population.individual.Rule;
+import cell_programming.population.individual.RuleType;
 import entropy.IEntropy;
+import utils.cp.Neighborhood;
 
-import java.util.Random;
+import java.util.*;
 
 public class CellularProgramming implements ICellularProgramming {
 
+
+    private static final double MUTATION_PROBABILITY = .01;
     private static final int C = 300;
     private static final int M = 50;
-    private static final int GENERATION_NUMBER = 5;
+    private static final int GENERATION_NUMBER = 1;
+    private static final Neighborhood neighborhood = new Neighborhood("11111");
 
-    private final Random random = new Random();
+    private final Random random = new Random(1);
     private final IEntropy<String> entropyCalculator;
     private final ICellularAutomaton cellular;
-
-    private int bytesNumber;
+    private final int bytesNumber;
 
 
     public CellularProgramming(final IEntropy<String> entropyCalculator,
@@ -109,9 +113,84 @@ public class CellularProgramming implements ICellularProgramming {
 
     /**
      * In this function the genetic operators will be applied
+     *
      * @param population: the rule population that contains the given rules
      */
     private void applyGeneticOperators(final IPopulation<Rule> population) {
 
+        final List<Rule> rules = population.getGeneratedIndividuals();
+
+        //the new rules for next population
+        final List<Rule> newRules = new ArrayList<>();
+
+        int index = 0;
+        for (final Rule rule : rules) {
+
+            //get all related cells based on the neighborhood pattern
+            final List<Rule> relatedCells = neighborhood.getValueFromNeighborhood(rules, index++);
+            //get the number of best rules and the best rules
+            final Map.Entry<List<Rule>, Integer> numberOfBestRules = bestRulesFromNeighborhoodCount(relatedCells, rule);
+
+            //if the rule is the best from it's neighborhood is 0 we keep it
+            if (numberOfBestRules.getValue() == 0) {
+                newRules.add(Rule.build(rule.getRuleNumber()));
+                continue;
+            }
+
+            //if the number of best from it's neighborhood is 1 than we mutate
+            if (numberOfBestRules.getValue() == 1) {
+                final Rule bestRule = numberOfBestRules.getKey().get(0);
+
+                //assume that the rules have the same type
+                Rule newRule = mutate(bestRule);
+                //if they are from different type then keep the initial value
+                if(!bestRule.getType().equals(rule.getType())){
+                   newRule = rule;
+                }
+
+                newRules.add(Rule.build(newRule.getRuleNumber()));
+                continue;
+            }
+
+
+        }
+
+        //set the population
+        population.setPopulation(newRules);
     }
+
+    private Rule mutate(final Rule rule) {
+
+        final int N = (rule.getType().equals(RuleType.ONE) ? 8 : 32);
+
+        int ruleNumber = rule.getRuleNumber();
+        for (int i = 0; i < N; ++i) {
+            final double probability = random.nextDouble();
+            if (probability > MUTATION_PROBABILITY) {
+                continue;
+            }
+            ruleNumber = ruleNumber | (1 << i);
+        }
+
+        return Rule.build(ruleNumber);
+    }
+
+    private Map.Entry<List<Rule>, Integer> bestRulesFromNeighborhoodCount(final List<Rule> neighborhood,
+                                                                          final Rule middleRule) {
+
+        final List<Rule> betterRules = new ArrayList<>();
+
+        //count how many rules
+        int count = 0;
+        for (final Rule rule : neighborhood) {
+            if (rule.getFitness() <= middleRule.getFitness()) {
+                continue;
+            }
+            ++count;
+            betterRules.add(rule);
+        }
+
+        return new AbstractMap.SimpleEntry<>(betterRules, count);
+    }
+
 }

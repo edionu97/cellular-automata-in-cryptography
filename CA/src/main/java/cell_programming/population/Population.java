@@ -42,4 +42,9 @@ public class Population implements IPopulation<Rule> {
     public List<Rule> getGeneratedIndividuals() {
         return rules != null ? rules : new ArrayList<>();
     }
+
+    @Override
+    public void setPopulation(final List<Rule> individuals) {
+        this.rules = individuals;
+    }
 }

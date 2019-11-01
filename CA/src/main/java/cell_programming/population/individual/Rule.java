@@ -7,10 +7,10 @@ import static utils.string.StringUtils.zeroPaddedAtStart;
 
 public class Rule {
 
-    private final int ruleNumber;
     private final RuleType type;
+    private final Map<String, String> ruleMap = new HashMap<>();
+    private int ruleNumber;
     private double fitness;
-    private Map<String, String> ruleMap = new HashMap<>();
 
     private Rule(final int ruleNumber, final RuleType type) {
         this.ruleNumber = ruleNumber;
@@ -32,6 +32,11 @@ public class Rule {
         return ruleNumber;
     }
 
+    public void setRuleNumber(final int ruleNumber) {
+        this.ruleNumber = ruleNumber;
+        populateRuleMap();
+    }
+
     public RuleType getType() {
         return type;
     }
@@ -44,8 +49,8 @@ public class Rule {
         );
     }
 
-
     private void populateRuleMap() {
+        ruleMap.clear();
 
         int n = 2 + 1;
         if (getType().equals(RuleType.TWO)) {
@@ -139,5 +144,10 @@ public class Rule {
 
     public void setFitness(final double fitness) {
         this.fitness = fitness;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("rno %d = %f", ruleNumber, fitness);
     }
 }

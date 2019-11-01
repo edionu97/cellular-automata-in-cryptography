@@ -51,7 +51,7 @@ public class Neighborhood {
 
             elements.add(configuration.get(position));
         });
-        
+
         return elements;
     }
 }
