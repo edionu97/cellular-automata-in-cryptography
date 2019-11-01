@@ -6,12 +6,14 @@ import entropy.IEntropy;
 import entropy.PNSEntropyCalculator;
 import utils.entropy.ISearcher;
 import utils.entropy.KMPSearcher;
+import utils.threads.ThreadHelper;
 
 public class Main {
     public static void main(final String... args) {
 
+
         final ISearcher searcher = new KMPSearcher();
-        final IEntropy entropy = new PNSEntropyCalculator(4, searcher);
+        final IEntropy<String> entropy = new PNSEntropyCalculator(4, searcher);
         final ICellularAutomaton cellular = new CellularAutomaton();
 
         final ICellularProgramming programming = new CellularProgramming(
@@ -19,5 +21,7 @@ public class Main {
         );
 
         programming.evolve();
+
+        ThreadHelper.getInstance().stopExecutor();
     }
 }

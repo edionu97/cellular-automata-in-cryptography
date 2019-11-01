@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PNSEntropyCalculator implements IEntropy {
+public class PNSEntropyCalculator implements IEntropy<String> {
 
     private final int h;
 
@@ -28,7 +28,9 @@ public class PNSEntropyCalculator implements IEntropy {
     }
 
     @Override
-    public double getEntropyValue() { // max value can be h
+    public double getEntropyValue(final String sequence) { // max value can be h
+
+        this.setSequence(sequence);
 
         double entropy = 0.0;
         for (final String s : subsequences) {

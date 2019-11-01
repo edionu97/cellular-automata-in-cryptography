@@ -12,14 +12,14 @@ public class CellularProgramming implements ICellularProgramming {
     private static final int M = 50;
     private static final int GENERATION_NUMBER = 5;
 
-    private final Random random = new Random();
-    private final IEntropy entropyCalculator;
+    private final Random random = new Random(1);
+    private final IEntropy<String> entropyCalculator;
     private final ICellularAutomaton cellular;
 
     private int bytesNumber;
 
 
-    public CellularProgramming(final IEntropy entropyCalculator,
+    public CellularProgramming(final IEntropy<String> entropyCalculator,
                                final ICellularAutomaton cellular,
                                final int bytesNumber) {
 
@@ -41,9 +41,10 @@ public class CellularProgramming implements ICellularProgramming {
                     population.getGeneratedRules(), bytesNumber
             );
 
-            fitness = computeGloballFitness();
+            fitness = computeGlobalFitness();
         }
 
+       // System.out.println(population.getGeneratedRules().get(0).getFitness());
         System.out.println(fitness);
 
     }
@@ -51,7 +52,7 @@ public class CellularProgramming implements ICellularProgramming {
     /**
      * @return calculates and returns a double value which represents the value of avg entropy
      */
-    private double computeGloballFitness() {
+    private double computeGlobalFitness() {
 
         double totalEntropy = .0;
         for (int i = 0; i < C; ++i) {
@@ -67,8 +68,9 @@ public class CellularProgramming implements ICellularProgramming {
             }
 
             //set the sequence and calculate the entropy value
-            entropyCalculator.setSequence(configuration.toString());
-            totalEntropy += entropyCalculator.getEntropyValue();
+            totalEntropy += entropyCalculator.getEntropyValue(
+                    configuration.toString()
+            );
         }
 
         computeRuleFitness();

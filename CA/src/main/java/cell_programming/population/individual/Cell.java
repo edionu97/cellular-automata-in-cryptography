@@ -56,9 +56,10 @@ public class Cell {
         return result;
     }
 
-    public void computeRuleFitness(final IEntropy entropy) {
-        entropy.setSequence(cellBitStream.toString());
-        final double ruleFitness = entropy.getEntropyValue();
+    public void computeRuleFitness(final IEntropy<String> entropy) {
+        final double ruleFitness = entropy.getEntropyValue(
+                cellBitStream.toString()
+        );
         getCellRule().setFitness(ruleFitness);
     }
 }
