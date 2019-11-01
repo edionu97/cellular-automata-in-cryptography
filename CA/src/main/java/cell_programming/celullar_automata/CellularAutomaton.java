@@ -15,9 +15,6 @@ public class CellularAutomaton implements ICellularAutomaton {
     private final List<Cell> cells = new ArrayList<>();
     private volatile StringBuilder configuration;
 
-    private ThreadHelper threadHelper = ThreadHelper.getInstance();
-
-
     /**
      * This function in used to add the new rules to each cell
      *
@@ -59,27 +56,10 @@ public class CellularAutomaton implements ICellularAutomaton {
         final StringBuilder builder = new StringBuilder();
         builder.setLength(configuration.length());
 
-        final List<Future<List<Map.Entry<Integer, Character>>>> precessedList = threadHelper.distributeOnThreadsAndSubmit(
-                cells, cellBatch -> {
-                    //process the batch
-                    final List<Map.Entry<Integer, Character>> processedBatch = new ArrayList<>();
-                    cellBatch.forEach(cell -> {
-                        final int cellIndex = cell.getCellIndex();
-                        final char character = cell.evolve().charAt(0);
-                        processedBatch.add(new AbstractMap.SimpleEntry<>(cellIndex, character));
-                    });
-                    return processedBatch;
-                }
-        );
-
-        precessedList.forEach(listFuture -> {
-            try {
-                listFuture.get().forEach(result -> {
-                    builder.setCharAt(result.getKey(), result.getValue());
-                });
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-            }
+        cells.forEach(cell -> {
+            builder.setCharAt(
+                    cell.getCellIndex(), cell.evolve().charAt(0)
+            );
         });
 
         return builder;
