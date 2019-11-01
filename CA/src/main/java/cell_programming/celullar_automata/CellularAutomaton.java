@@ -22,7 +22,6 @@ public class CellularAutomaton implements ICellularAutomaton {
      * @param N:     the number of the rules necessary to encode N bites
      */
     @Override
-    //todo parallel
     public void reassignRules(final List<Rule> rules, final int N) {
 
         if (rules.size() != N) {

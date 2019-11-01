@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="679c32f4-5d4b-47b8-9ff6-cb9fe4a71005" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/cell_programming/celullar_automata/CellularAutomaton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/cell_programming/celullar_automata/CellularAutomaton.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/celullar_automata/CellularAutomaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/celullar_automata/CellularAutomaton.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -98,7 +99,7 @@
       <updated>1572432627469</updated>
       <workItem from="1572432631087" duration="16224000" />
       <workItem from="1572504890747" duration="23161000" />
-      <workItem from="1572592777549" duration="8881000" />
+      <workItem from="1572592777549" duration="9182000" />
     </task>
     <servers />
   </component>
