@@ -9,10 +9,10 @@ import java.util.Random;
 public class CellularProgramming implements ICellularProgramming {
 
     private static final int C = 300;
-    private static final int M = 50;
+    private static final int M = 4096;
     private static final int GENERATION_NUMBER = 5;
 
-    private final Random random = new Random(1);
+    private final Random random = new Random();
     private final IEntropy<String> entropyCalculator;
     private final ICellularAutomaton cellular;
 
@@ -44,9 +44,7 @@ public class CellularProgramming implements ICellularProgramming {
             fitness = computeGlobalFitness();
         }
 
-       // System.out.println(population.getGeneratedRules().get(0).getFitness());
         System.out.println(fitness);
-
     }
 
     /**
