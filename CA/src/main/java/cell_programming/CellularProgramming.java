@@ -152,6 +152,7 @@ public class CellularProgramming implements ICellularProgramming {
                 continue;
             }
 
+            //todo implement conditions
 
         }
 
