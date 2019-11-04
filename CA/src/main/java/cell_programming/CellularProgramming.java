@@ -4,22 +4,23 @@ import cell_programming.celullar_automata.ICellularAutomaton;
 import cell_programming.population.IPopulation;
 import cell_programming.population.Population;
 import cell_programming.population.individual.Rule;
-import cell_programming.population.individual.RuleType;
 import entropy.IEntropy;
 import utils.cp.Neighborhood;
 
 import java.util.*;
+
+import static utils.cp.GeneticOperatorHelper.*;
 
 public class CellularProgramming implements ICellularProgramming {
 
 
     private static final double MUTATION_PROBABILITY = .01;
     private static final int C = 300;
-    private static final int M = 50;
-    private static final int GENERATION_NUMBER = 1;
-    private static final Neighborhood neighborhood = new Neighborhood("11111");
+    private static final int M = 100;
+    private static final int GENERATION_NUMBER = 50;
+    private static final Neighborhood neighborhood = new Neighborhood("11-1-11)");
 
-    private final Random random = new Random(1);
+    private final Random random = new Random();
     private final IEntropy<String> entropyCalculator;
     private final ICellularAutomaton cellular;
     private final int bytesNumber;
@@ -46,7 +47,6 @@ public class CellularProgramming implements ICellularProgramming {
             cellular.reassignRules(
                     population.getGeneratedIndividuals(), bytesNumber
             );
-
             fitness = computeGlobalFitness();
             this.applyGeneticOperators(population);
         }
@@ -129,9 +129,9 @@ public class CellularProgramming implements ICellularProgramming {
             //get all related cells based on the neighborhood pattern
             final List<Rule> relatedCells = neighborhood.getValueFromNeighborhood(rules, index++);
             //get the number of best rules and the best rules
-            final Map.Entry<List<Rule>, Integer> numberOfBestRules = bestRulesFromNeighborhoodCount(relatedCells, rule);
+            final Map.Entry<List<Rule>, Integer> bestRules = bestRulesFromNeighborhoodCount(relatedCells, rule);
 
-            switch (numberOfBestRules.getValue()) {
+            switch (bestRules.getValue()) {
                 //if the rule is the best from it's neighborhood is 0 we keep it
                 case 0: {
                     newRules.add(
@@ -142,11 +142,11 @@ public class CellularProgramming implements ICellularProgramming {
                     break;
                 }
                 //if the number of best from it's neighborhood is 1 than we mutate
-                case 1 : {
+                case 1: {
                     crossoverOneBetter(
                             newRules,
                             rule,
-                            numberOfBestRules);
+                            bestRules);
                     break;
                 }
                 //if the number of best from it's neighborhood is 2 crossover its parents, select a random child and mutate it
@@ -154,13 +154,24 @@ public class CellularProgramming implements ICellularProgramming {
                     crossoverTwoBetter(
                             newRules,
                             rule,
-                            numberOfBestRules
+                            bestRules.getKey()
                     );
+                    break;
+                }
+
+                default: {
+                    final int size = bestRules.getKey().size();
+                    crossoverTwoBetter(
+                            newRules,
+                            rule,
+                            Arrays.asList(
+                                    bestRules.getKey().get(random.nextInt(size)),
+                                    bestRules.getKey().get(random.nextInt(size))
+                            )
+                    );
+                    break;
                 }
             }
-
-
-            //todo implement conditions
 
         }
 
@@ -171,23 +182,41 @@ public class CellularProgramming implements ICellularProgramming {
     /**
      * This function will handle the crossover if the number of better cells from
      * neighborhood is exactly two
-     * @param newRules: the list of new rules that will obtain
-     * @param rule: the current rules
+     *
+     * @param newRules:          the list of new rules that will obtain
+     * @param rule:              the current rules
      * @param numberOfBestRules: best rules from rule's neighborhood
      */
     private void crossoverTwoBetter(final List<Rule> newRules,
                                     final Rule rule,
-                                    final Map.Entry<List<Rule>, Integer> numberOfBestRules) {
+                                    final List<Rule> numberOfBestRules) {
 
+        //get the rule parents (it's mother and it's father)
+        final Rule mother = numberOfBestRules.get(0);
+        final Rule father = numberOfBestRules.get(1);
 
+        // mate the parents in order to obtain a child
+        Rule childOne = crossoverSpecies(mother, father, random);
+        Rule childTwo = crossoverSpecies(father, mother, random);
 
+        //add new characteristics to child
+        childOne = mutate(childOne, random, MUTATION_PROBABILITY);
+        childTwo = mutate(childTwo, random, MUTATION_PROBABILITY);
+
+        //get the selected child
+        //todo resolve the case in which the rule type is not equal to the child type
+       final Rule selectedChild = select(childOne, rule, childTwo, random);
+
+        //add into new population (fix the element to be added)
+        newRules.add(random.nextDouble() <= .5 ? childOne : childTwo);
     }
 
     /**
      * This function will handle the crossover if the number of better cells from
      * neighborhood is exactly one
-     * @param newRules: the list of new rules that will obtain
-     * @param rule: the current rules
+     *
+     * @param newRules:          the list of new rules that will obtain
+     * @param rule:              the current rules
      * @param numberOfBestRules: best rules from rule's neighborhood
      */
     private void crossoverOneBetter(final List<Rule> newRules, Rule rule,
@@ -196,7 +225,7 @@ public class CellularProgramming implements ICellularProgramming {
         final Rule bestRule = numberOfBestRules.getKey().get(0);
 
         //assume that the rules have the same type
-        Rule newRule = mutate(bestRule);
+        Rule newRule = mutate(bestRule, random, MUTATION_PROBABILITY);
         //if they are from different type then keep the initial value
         if (!bestRule.getType().equals(rule.getType())) {
             newRule = rule;
@@ -205,31 +234,12 @@ public class CellularProgramming implements ICellularProgramming {
         newRules.add(Rule.build(newRule.getRuleNumber()));
     }
 
-    /**
-     * Perform the mutation with a fixed probability
-     * @param rule: the rule that we will mutate
-     * @return a new rule
-     */
-    private Rule mutate(final Rule rule) {
-
-        final int N = (rule.getType().equals(RuleType.ONE) ? 8 : 32);
-
-        int ruleNumber = rule.getRuleNumber();
-        for (int i = 0; i < N; ++i) {
-            final double probability = random.nextDouble();
-            if (probability > MUTATION_PROBABILITY) {
-                continue;
-            }
-            ruleNumber = ruleNumber | (1 << i);
-        }
-
-        return Rule.build(ruleNumber);
-    }
 
     /**
      * Computes the number of best rules from cell's neighborhood
+     *
      * @param neighborhood: the cells neighborhood
-     * @param middleRule: the mai rule
+     * @param middleRule:   the mai rule
      * @return a pair of two objects [number_of_rules, [rules...]]
      */
     private Map.Entry<List<Rule>, Integer> bestRulesFromNeighborhoodCount(final List<Rule> neighborhood,

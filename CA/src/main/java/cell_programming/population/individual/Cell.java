@@ -51,6 +51,10 @@ public class Cell {
         final String result = cellRule.applyRuleOnAt(
                 configuration.toString(), cellIndex);
 
+        if(result == null){
+            System.out.println(cellRule.getType() + " " + cellRule.getRuleNumber());
+        }
+
         cellBitStream.append(result);
 
         return result;

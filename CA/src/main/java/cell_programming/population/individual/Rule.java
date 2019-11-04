@@ -9,30 +9,30 @@ public class Rule {
 
     private final RuleType type;
     private final Map<String, String> ruleMap = new HashMap<>();
-    private int ruleNumber;
+    private long ruleNumber;
     private double fitness;
 
-    private Rule(final int ruleNumber, final RuleType type) {
+    private Rule(final long ruleNumber, final RuleType type) {
         this.ruleNumber = ruleNumber;
         this.type = type;
         populateRuleMap();
     }
 
-    public static Rule build(final int ruleNumber) {
+    public static Rule build(final long ruleNumber) {
         return new Rule(
                 ruleNumber, getRuleType(ruleNumber));
     }
 
-    private static RuleType getRuleType(int ruleNumber) {
+    private static RuleType getRuleType(long ruleNumber) {
         return ruleNumber < 256 ? RuleType.ONE : RuleType.TWO;
     }
 
 
-    public int getRuleNumber() {
+    public long getRuleNumber() {
         return ruleNumber;
     }
 
-    public void setRuleNumber(final int ruleNumber) {
+    public void setRuleNumber(final long ruleNumber) {
         this.ruleNumber = ruleNumber;
         populateRuleMap();
     }

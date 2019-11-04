@@ -4,6 +4,9 @@
     <list default="true" id="679c32f4-5d4b-47b8-9ff6-cb9fe4a71005" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/population/individual/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/population/individual/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/population/individual/Rule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/population/individual/Rule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/string/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/string/StringUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +102,7 @@
       <workItem from="1572432631087" duration="16224000" />
       <workItem from="1572504890747" duration="23161000" />
       <workItem from="1572592777549" duration="18311000" />
-      <workItem from="1572854449115" duration="1199000" />
+      <workItem from="1572854449115" duration="17777000" />
     </task>
     <servers />
   </component>
