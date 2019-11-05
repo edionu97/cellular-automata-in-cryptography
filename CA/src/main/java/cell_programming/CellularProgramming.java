@@ -17,7 +17,7 @@ public class CellularProgramming implements ICellularProgramming {
 
     private static final double MUTATION_PROBABILITY = .01;
     private static final int C = 300;//number of initial configuration
-    private static final int M = 200;//number of evolving steps
+    private static final int M = 50;//number of evolving steps
     private static final int GENERATION_NUMBER = 100; //number of generations
     private static final Neighborhood neighborhood = new Neighborhood("11-1-11");
 
@@ -29,12 +29,12 @@ public class CellularProgramming implements ICellularProgramming {
 
     public CellularProgramming(final IEntropy<String> entropyCalculator,
                                final ICellularAutomaton cellular,
-                               final int bytesNumber,
+                               final int keyBitsNumber,
                                final BiConsumer<Integer, Double> updater) {
 
         this.entropyCalculator = entropyCalculator;
         this.cellular = cellular;
-        this.bytesNumber = bytesNumber;
+        this.bytesNumber = keyBitsNumber;
         this.generationUpdater = updater;
     }
 
