@@ -19,15 +19,15 @@ public class GeneticOperatorHelper {
 
         final List<Rule> newRules = Stream
                 .of(childOne, childTwo)
-                .filter(x -> isSame(x, toBeReplacedRule))
+                .filter(rule -> isSame(rule, toBeReplacedRule))
                 .collect(Collectors.toList());
 
-        //todo remove
-        if(newRules.isEmpty()){
-            newRules.add(Rule.build(toBeReplacedRule.getRuleNumber()));
+        //if we have a child of the same type as the rule that will be replaced then select randomly a child
+        if (!newRules.isEmpty()) {
+            return newRules.get(random.nextInt(newRules.size()));
         }
 
-        return newRules.get(random.nextInt(newRules.size()));
+        return random.nextDouble() <= .5 ? childOne : childTwo;
     }
 
 
@@ -94,7 +94,7 @@ public class GeneticOperatorHelper {
      * @param father: the father
      * @return true if those parents belong to the same species
      */
-    private static boolean isSame(final Rule mother, final Rule father) {
+    public static boolean isSame(final Rule mother, final Rule father) {
         return mother.getType().equals(father.getType());
     }
 
@@ -281,6 +281,25 @@ public class GeneticOperatorHelper {
         }
 
         stringBuilder.setCharAt(geneIndex, newValueForPredominantGene);
+    }
+
+    /**
+     * Transform a rule from a type (One or Two) into another type
+     *
+     * @param rule:         the rule that will be transformed
+     * @param toBeReplaced: the type in which we want to transform the rule
+     * @return a new rule, representing the transformation of the rule in the type @param type
+     */
+    private static Rule transform(final Rule rule,
+                                  final Rule toBeReplaced,
+                                  final Random random) {
+
+        //if the rule is of the same  type do nothing
+        if (isSame(toBeReplaced, rule)) {
+            return rule;
+        }
+
+        return crossoverSpecies(toBeReplaced, rule, random);
     }
 
 }

@@ -2,13 +2,9 @@ package cell_programming.celullar_automata;
 
 import cell_programming.population.individual.Cell;
 import cell_programming.population.individual.Rule;
-import utils.threads.ThreadHelper;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Future;
 
 public class CellularAutomaton implements ICellularAutomaton {
 

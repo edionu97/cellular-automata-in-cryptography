@@ -16,7 +16,7 @@ public class Main {
         final ICellularAutomaton cellular = new CellularAutomaton();
 
         final ICellularProgramming programming = new CellularProgramming(
-                entropy, cellular, 50
+                entropy, cellular, 50, (index, fitness) -> System.out.println("gen" + index + " " + fitness)
         );
 
         programming.evolve();

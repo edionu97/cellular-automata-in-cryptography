@@ -8,6 +8,7 @@ import entropy.IEntropy;
 import utils.cp.Neighborhood;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 
 import static utils.cp.GeneticOperatorHelper.*;
 
@@ -15,24 +16,26 @@ public class CellularProgramming implements ICellularProgramming {
 
 
     private static final double MUTATION_PROBABILITY = .01;
-    private static final int C = 300;
-    private static final int M = 100;
-    private static final int GENERATION_NUMBER = 50;
-    private static final Neighborhood neighborhood = new Neighborhood("11-1-11)");
+    private static final int C = 300;//number of initial configuration
+    private static final int M = 100;//number of evolving steps
+    private static final int GENERATION_NUMBER = 100; //number of generations
+    private static final Neighborhood neighborhood = new Neighborhood("1--1--1");
 
     private final Random random = new Random();
     private final IEntropy<String> entropyCalculator;
     private final ICellularAutomaton cellular;
     private final int bytesNumber;
-
+    private final BiConsumer<Integer, Double> generationUpdater;
 
     public CellularProgramming(final IEntropy<String> entropyCalculator,
                                final ICellularAutomaton cellular,
-                               final int bytesNumber) {
+                               final int bytesNumber,
+                               final BiConsumer<Integer, Double> updater) {
 
         this.entropyCalculator = entropyCalculator;
         this.cellular = cellular;
         this.bytesNumber = bytesNumber;
+        this.generationUpdater = updater;
     }
 
     @Override
@@ -41,16 +44,19 @@ public class CellularProgramming implements ICellularProgramming {
         final IPopulation<Rule> population = new Population(random, bytesNumber);
         population.generate();
 
-        double fitness = .0;
         for (int gen = 0; gen < GENERATION_NUMBER; ++gen) {
             //reassign rules
             cellular.reassignRules(
                     population.getGeneratedIndividuals(), bytesNumber
             );
-            fitness = computeGlobalFitness();
+            generationUpdater.accept(gen, computeGlobalFitness());
             this.applyGeneticOperators(population);
         }
 
+        final double fitness = computeGlobalFitness();
+        generationUpdater.accept(GENERATION_NUMBER, fitness);
+
+        System.out.println(population.getGeneratedIndividuals());
         System.out.println(fitness);
     }
 
@@ -125,12 +131,11 @@ public class CellularProgramming implements ICellularProgramming {
 
         int index = 0;
         for (final Rule rule : rules) {
-
             //get all related cells based on the neighborhood pattern
             final List<Rule> relatedCells = neighborhood.getValueFromNeighborhood(rules, index++);
             //get the number of best rules and the best rules
             final Map.Entry<List<Rule>, Integer> bestRules = bestRulesFromNeighborhoodCount(relatedCells, rule);
-
+            //depending of the number of best rules from neighborhood, apply different types of crossover
             switch (bestRules.getValue()) {
                 //if the rule is the best from it's neighborhood is 0 we keep it
                 case 0: {
@@ -158,7 +163,7 @@ public class CellularProgramming implements ICellularProgramming {
                     );
                     break;
                 }
-
+                //if the number of best rules from neighborhood are greater than 2 then randomly select 2 and apply crossover
                 default: {
                     final int size = bestRules.getKey().size();
                     crossoverTwoBetter(
@@ -196,19 +201,17 @@ public class CellularProgramming implements ICellularProgramming {
         final Rule father = numberOfBestRules.get(1);
 
         // mate the parents in order to obtain a child
-        Rule childOne = crossoverSpecies(mother, father, random);
-        Rule childTwo = crossoverSpecies(father, mother, random);
+        final Rule childOne = crossoverSpecies(mother, father, random);
+        final Rule childTwo = crossoverSpecies(father, mother, random);
 
         //add new characteristics to child
-        childOne = mutate(childOne, random, MUTATION_PROBABILITY);
-        childTwo = mutate(childTwo, random, MUTATION_PROBABILITY);
+        final Rule childOneMutated = mutate(childOne, random, MUTATION_PROBABILITY);
+        final Rule childTwoMutated = mutate(childTwo, random, MUTATION_PROBABILITY);
 
-        //get the selected child
-        //todo resolve the case in which the rule type is not equal to the child type
-       final Rule selectedChild = select(childOne, rule, childTwo, random);
-
-        //add into new population (fix the element to be added)
-        newRules.add(random.nextDouble() <= .5 ? childOne : childTwo);
+        //select a child from the mutated children and add it into population
+        newRules.add(
+                select(childOneMutated, rule, childTwoMutated, random)
+        );
     }
 
     /**
