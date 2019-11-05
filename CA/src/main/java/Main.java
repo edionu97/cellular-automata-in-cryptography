@@ -2,10 +2,13 @@ import cell_programming.CellularProgramming;
 import cell_programming.ICellularProgramming;
 import cell_programming.celullar_automata.CellularAutomaton;
 import cell_programming.celullar_automata.ICellularAutomaton;
+import cell_programming.population.individual.Rule;
 import entropy.IEntropy;
 import entropy.PNSEntropyCalculator;
 import utils.entropy.ISearcher;
 import utils.entropy.KMPSearcher;
+
+import java.util.List;
 
 public class Main {
     public static void main(final String... args) {
@@ -19,6 +22,8 @@ public class Main {
                 entropy, cellular, 50, (index, fitness) -> System.out.println("gen" + index + " " + fitness)
         );
 
-        programming.evolve();
+        final List<Rule> rules = programming.evolve();
+
+        System.out.println(rules);
     }
 }

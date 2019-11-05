@@ -39,7 +39,7 @@ public class CellularProgramming implements ICellularProgramming {
     }
 
     @Override
-    public void evolve() {
+    public List<Rule> evolve() {
 
         final IPopulation<Rule> population = new Population(random, bytesNumber);
         population.generate();
@@ -56,8 +56,7 @@ public class CellularProgramming implements ICellularProgramming {
         final double fitness = computeGlobalFitness();
         generationUpdater.accept(GENERATION_NUMBER, fitness);
 
-        System.out.println(population.getGeneratedIndividuals());
-        System.out.println(fitness);
+        return population.getGeneratedIndividuals();
     }
 
     /**
