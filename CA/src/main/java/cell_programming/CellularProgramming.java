@@ -17,9 +17,9 @@ public class CellularProgramming implements ICellularProgramming {
 
     private static final double MUTATION_PROBABILITY = .01;
     private static final int C = 300;//number of initial configuration
-    private static final int M = 100;//number of evolving steps
+    private static final int M = 200;//number of evolving steps
     private static final int GENERATION_NUMBER = 100; //number of generations
-    private static final Neighborhood neighborhood = new Neighborhood("1--1--1");
+    private static final Neighborhood neighborhood = new Neighborhood("11-1-11");
 
     private final Random random = new Random();
     private final IEntropy<String> entropyCalculator;

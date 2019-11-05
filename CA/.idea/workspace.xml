@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="679c32f4-5d4b-47b8-9ff6-cb9fe4a71005" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/cp/GeneticOperatorHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/cp/GeneticOperatorHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/cell_programming/CellularProgramming.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/cell_programming/CellularProgramming.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/utils/cp/GeneticOperatorHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/utils/cp/GeneticOperatorHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +50,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="RunDashboard">
@@ -109,7 +113,7 @@
       <workItem from="1572504890747" duration="23161000" />
       <workItem from="1572592777549" duration="18311000" />
       <workItem from="1572854449115" duration="17981000" />
-      <workItem from="1572936743340" duration="4942000" />
+      <workItem from="1572936743340" duration="6304000" />
     </task>
     <servers />
   </component>
