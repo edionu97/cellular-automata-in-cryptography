@@ -17,9 +17,9 @@ public class CellularProgramming implements ICellularProgramming {
 
     private static final double MUTATION_PROBABILITY = .01;
     private static final int C = 300;//number of initial configuration
-    private static final int M = 50;//number of evolving steps
+    private static final int M = 4096;//number of evolving steps
     private static final int GENERATION_NUMBER = 100; //number of generations
-    private static final Neighborhood neighborhood = new Neighborhood("11-1-11");
+    private static final Neighborhood neighborhood = new Neighborhood("1--1--1");
 
     private final Random random = new Random();
     private final IEntropy<String> entropyCalculator;
@@ -41,22 +41,32 @@ public class CellularProgramming implements ICellularProgramming {
     @Override
     public List<Rule> evolve() {
 
+
         final IPopulation<Rule> population = new Population(random, bytesNumber);
         population.generate();
 
+        Map.Entry<Double, List<Rule>> selectedRules = new AbstractMap.SimpleEntry<>(.0, new ArrayList<>());
         for (int gen = 0; gen < GENERATION_NUMBER; ++gen) {
             //reassign rules
             cellular.reassignRules(
                     population.getGeneratedIndividuals(), bytesNumber
             );
-            generationUpdater.accept(gen, computeGlobalFitness());
+            //compute the fitness
+            final double fitness = computeGlobalFitness();
+            //inform the updater
+            generationUpdater.accept(gen, fitness);
+            //retain the best configuration obtained
+            if(selectedRules.getKey() < fitness){
+                selectedRules = new AbstractMap.SimpleEntry<>(fitness, population.getGeneratedIndividuals());
+            }
+
             this.applyGeneticOperators(population);
         }
 
         final double fitness = computeGlobalFitness();
         generationUpdater.accept(GENERATION_NUMBER, fitness);
 
-        return population.getGeneratedIndividuals();
+        return selectedRules.getValue();
     }
 
     /**

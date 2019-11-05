@@ -24,6 +24,8 @@ public class Main {
 
         final List<Rule> rules = programming.evolve();
 
+        cellular.reassignRules(rules, rules.size());
+
         System.out.println(rules);
     }
 }

@@ -62,8 +62,7 @@ public class CellularAutomaton implements ICellularAutomaton {
 
     @Override
     public List<Cell> getCells() {
-        return cells
-                ;
+        return cells;
     }
 
     private void populateCells(final List<Rule> rules) {
