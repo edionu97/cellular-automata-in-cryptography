@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="679c32f4-5d4b-47b8-9ff6-cb9fe4a71005" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/cell_programming/CellularProgramming.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/cell_programming/CellularProgramming.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/utils/cp/GeneticOperatorHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/utils/cp/GeneticOperatorHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/CellularProgramming.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cell_programming/celullar_automata/CellularAutomaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cell_programming/celullar_automata/CellularAutomaton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/cp/GeneticOperatorHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/cp/GeneticOperatorHelper.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -116,7 +109,7 @@
       <workItem from="1572504890747" duration="23161000" />
       <workItem from="1572592777549" duration="18311000" />
       <workItem from="1572854449115" duration="17981000" />
-      <workItem from="1572936743340" duration="4809000" />
+      <workItem from="1572936743340" duration="4942000" />
     </task>
     <servers />
   </component>

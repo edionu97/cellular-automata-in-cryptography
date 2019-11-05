@@ -94,7 +94,7 @@ public class GeneticOperatorHelper {
      * @param father: the father
      * @return true if those parents belong to the same species
      */
-    public static boolean isSame(final Rule mother, final Rule father) {
+    private static boolean isSame(final Rule mother, final Rule father) {
         return mother.getType().equals(father.getType());
     }
 
